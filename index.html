@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HRIQs Full HTML</title>
+  <title>HRIQs Main Page</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
     html {
@@ -13,7 +13,7 @@
     body { font-family: 'Inter', sans-serif; background-color: #fff; color: #333; }
     .hero { display: flex; flex-wrap: wrap; align-items: center; padding: 2rem; }
     .empower { display: flex; flex-wrap: wrap; align-items: center; padding: 2rem; border: 0px solid; }
-    .empower div { border: 0px solid; height: 230px;}
+    .empower div { border: 0px solid; height: auto; }
     .hero {
       background: #ff9b00;
       color: #fff;
@@ -140,7 +140,7 @@
       display: block;
     }
     .empower-text {
-      flex: 0 1 280px;   /* Yazı alanı biraz büyütüldü (120px -> 180px) */
+      flex: 0 1 auto;
       min-width: 0;
       display: flex;
       flex-direction: column;
@@ -150,6 +150,7 @@
       justify-content: center;
       align-items: flex-start;
       margin-left: 0;
+      padding: 1rem 0;
     }
     .empower-text p.h {
       font-size: 1.1rem; /* Başlık yazısı küçüldü */

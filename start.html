@@ -195,7 +195,7 @@
         </div>
         <form id="loginForm" onsubmit="handleLogin(event)">
           <div class="form-group" id="emailGroup">
-            <input type="email" id="email" placeholder="E-posta" required />
+            <input type="email" id="email" placeholder="E-mail" required />
           </div>
           <div class="error-message" id="loginError">
             Invalid email or password
@@ -240,6 +240,7 @@
       </div>
     </div>
     <script>
+      let popup;
       function handleLogin(event) {
         event.preventDefault();
         const loginError = document.getElementById("loginError");
@@ -247,10 +248,69 @@
         loginError.style.display = "block";
       }
 
-      function handleSocialLogin(provider) {
-        const loginError = document.getElementById("loginError");
+      function onMessage(event) {
+        if (event.data.type === "googleLogin" && event.data.success) {
+          if (popup && !popup.closed) {
+            popup.close();
+          }
+          window.removeEventListener("message", onMessage);
+          window.location.href = "https://hriqs.com";
+        }
+      }
 
-        loginError.style.display = "block";
+      function handleSocialLogin(provider) {
+        window.addEventListener("message", onMessage);
+
+        if (provider === "google") {
+          const clientId =
+            "419647747165-rd2o10v2qe36ef1a27dif4ko1m9kp3qd.apps.googleusercontent.com";
+          const redirectUri = "https://hriqs.com";
+          const scope = encodeURIComponent("email profile");
+
+          const googleAuthUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+
+          const width = 500;
+          const height = 600;
+          const left = (window.innerWidth - width) / 2;
+          const top = (window.innerHeight - height) / 2;
+
+          popup = window.open(
+            googleAuthUrl,
+            "Google Login",
+            `width=${width},height=${height},left=${left},top=${top}`
+          );
+
+          setInterval(() => {
+            if (popup && !popup.closed) {
+              popup.close();
+              window.location.href = "https://hriqs.com";
+            }
+          }, 3000);
+        } else if (provider === "microsoft") {
+          const clientId = "3004c3b7-0ce1-4b01-997e-79a01e6b43dd";
+          const redirectUri = "https://hriqs.com";
+          const scope = encodeURIComponent("User.Read email profile openid");
+
+          const microsoftAuthUrl = `https://login.microsoftonline.com/common/oauth2/v2.0/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+
+          const width = 500;
+          const height = 600;
+          const left = (window.innerWidth - width) / 2;
+          const top = (window.innerHeight - height) / 2;
+
+          popup = window.open(
+            microsoftAuthUrl,
+            "Microsoft Login",
+            `width=${width},height=${height},left=${left},top=${top}`
+          );
+
+          setInterval(() => {
+            if (popup && !popup.closed) {
+              popup.close();
+              window.location.href = "https://hriqs.com";
+            }
+          }, 3000);
+        }
       }
     </script>
   </body>
