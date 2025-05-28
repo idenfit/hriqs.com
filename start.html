@@ -189,7 +189,7 @@
       </div>
       <div class="login-form">
         <div class="logo">
-          <a href="index.html">
+          <a href="#" onclick="handleRedirect(event)">
             <img src="images/hriqs-login-logo-with-text.png" alt="HRIQs Logo" />
           </a>
         </div>
@@ -241,6 +241,12 @@
     </div>
     <script>
       let popup;
+
+      function handleRedirect(event) {
+        event.preventDefault();
+        window.location.href = "index.html";
+      }
+
       function handleLogin(event) {
         event.preventDefault();
         const loginError = document.getElementById("loginError");
@@ -248,19 +254,7 @@
         loginError.style.display = "block";
       }
 
-      function onMessage(event) {
-        if (event.data.type === "googleLogin" && event.data.success) {
-          if (popup && !popup.closed) {
-            popup.close();
-          }
-          window.removeEventListener("message", onMessage);
-          window.location.href = "https://hriqs.com";
-        }
-      }
-
       function handleSocialLogin(provider) {
-        window.addEventListener("message", onMessage);
-
         if (provider === "google") {
           const clientId =
             "419647747165-rd2o10v2qe36ef1a27dif4ko1m9kp3qd.apps.googleusercontent.com";
@@ -283,9 +277,8 @@
           setInterval(() => {
             if (popup && !popup.closed) {
               popup.close();
-              window.location.href = "https://hriqs.com";
             }
-          }, 3000);
+          }, 10000);
         } else if (provider === "microsoft") {
           const clientId = "3004c3b7-0ce1-4b01-997e-79a01e6b43dd";
           const redirectUri = "https://hriqs.com";
@@ -307,9 +300,8 @@
           setInterval(() => {
             if (popup && !popup.closed) {
               popup.close();
-              window.location.href = "https://hriqs.com";
             }
-          }, 3000);
+          }, 10000);
         }
       }
     </script>
